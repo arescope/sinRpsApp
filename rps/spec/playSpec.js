@@ -1,3 +1,7 @@
+'use strict';
+
+const {Requests, THROW} = require('../src/rps');
+
 describe('play', () => {
     let observer;
 
@@ -8,19 +12,19 @@ describe('play', () => {
         });
 
         it('rock vs scissors', () => {
-            new Requests().play('rock', 'scissors', observer);
+            new Requests().play(THROW.ROCK, THROW.SCISSORS, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
 
         it('paper vs rock', () => {
-            new Requests().play('paper', 'rock', observer);
+            new Requests().play(THROW.PAPER, THROW.ROCK, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
 
         it('scissors vs paper', () => {
-            new Requests().play('scissors', 'paper', observer);
+            new Requests().play(THROW.SCISSORS, THROW.PAPER, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
@@ -32,44 +36,44 @@ describe('play', () => {
         });
 
         it('scissors vs rock', () => {
-            new Requests().play('scissors', 'rock', observer);
+            new Requests().play(THROW.SCISSORS, THROW.ROCK, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
 
         it('rock vs paper', () => {
-            new Requests().play('rock', 'paper', observer);
+            new Requests().play(THROW.ROCK, THROW.PAPER, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
 
         it('paper vs scissors', () => {
-            new Requests().play('paper', 'scissors', observer);
+            new Requests().play(THROW.PAPER, THROW.SCISSORS, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
 
     });
 
-    describe('tie', () => {
+    describe('draw', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj("observer", ["tie"]);
+            observer = jasmine.createSpyObj("observer", ["draw"]);
         });
 
         it('rock vs rock', () => {
-            new Requests().play('rock', 'rock', observer);
+            new Requests().play(THROW.ROCK, THROW.ROCK, observer);
 
-            expect(observer.tie).toHaveBeenCalled();
+            expect(observer.draw).toHaveBeenCalled();
         });
 
         it('paper vs paper', () => {
-            new Requests().play('paper', 'paper', observer);
+            new Requests().play(THROW.PAPER, THROW.PAPER, observer);
 
             expect(observer.draw).toHaveBeenCalled();
         });
 
         it('scissors vs scissors', () => {
-            new Requests().play('scissors', 'scissors', observer);
+            new Requests().play(THROW.SCISSORS, THROW.SCISSORS, observer);
 
             expect(observer.draw).toHaveBeenCalled();
         });
@@ -81,13 +85,13 @@ describe('play', () => {
         });
 
         it('rock vs sailboat', () => {
-            new Requests().play('scissors', 'sailboat', observer);
+            new Requests().play(THROW.SCISSORS, 'sailboat', observer);
 
             expect(observer.invalid).toHaveBeenCalled();
         });
 
         it('sailboat vs rock', () => {
-            new Requests().play('sailboat', 'scissors', observer);
+            new Requests().play('sailboat', THROW.SCISSORS, observer);
 
             expect(observer.invalid).toHaveBeenCalled();
         });
@@ -99,20 +103,3 @@ describe('play', () => {
         });
     });
 });
-
-function Requests() {
-    this.play = (player1, player2, observer) => {
-        if (['rock', 'paper', 'scissors'].includes(player1) === false ||
-            ['rock', 'paper', 'scissors'].includes(player2) === false) {
-            observer.invalid();
-        } else if (player1 === player2) {
-            observer.draw();
-        } else if ((player1 === 'rock' && player2 === 'scissors') ||
-            (player1 === 'paper' && player2 === 'rock') ||
-            (player1 === 'scissors' && player2 === 'paper')) {
-            observer.p1Wins();
-        } else {
-            observer.p2Wins();
-        }
-    }
-}
