@@ -1,21 +1,33 @@
-fdescribe('repoTest', () => {
+const {Round} = require('../src/rps');
+const {FakeRoundRepo} = require('../src/fakeRepo');
+
+
+fdescribe('FakeRoundRepo', () => {
+    let repo;
+
+    beforeEach(() => {
+        repo = new FakeRoundRepo();
+    });
+
     describe('when there is no rounds', () => {
         it('is empty', () => {
-            let repo = new FakeRoundRepo();
-
             expect(repo.isEmpty()).toBeTruthy();
         });
     });
 
     describe('when there are rounds', () => {
         it('is not empty', () => {
+            repo.save(new Round());
 
+            expect(repo.isEmpty()).toBeFalsy();
+        });
+
+        it('returns saved rounds', () => {
+            let round = new Round();
+
+            repo.save(round);
+
+            expect(repo.getAll()).toEqual([round]);
         });
     });
 });
-
-function FakeRoundRepo() {
-    this.isEmpty = () => {
-        return true;
-    }
-}

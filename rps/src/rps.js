@@ -6,6 +6,12 @@ const THROW = {
 
 const VALID_THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS];
 
+function Round(p1Throw, p2Throw, result) {
+    this.p1Throw = p1Throw;
+    this.p2Throw = p2Throw;
+    this.result = result;
+}
+
 function Requests() {
     this.playRound = (player1, player2, observer) => {
         new PlayRoundRequest(player1, player2, observer).process();
@@ -42,3 +48,4 @@ function PlayRoundRequest(p1, p2, observer) {
 }
 
 module.exports = {Requests, THROW}
+module.exports = {Requests, THROW, Round}
