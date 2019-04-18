@@ -90,9 +90,10 @@ describe("play form", () => {
         let input = document.querySelector("[name='p1Throw']")
         input.value = "foo"
         ReactTestUtils.Simulate.change(input)
-        //fill in p1 throw
-        //fill in p2 throw
-        //submit the form
+
+        input = document.querySelector("[name='p2Throw']")
+        input.value = "bar"
+        ReactTestUtils.Simulate.change(input)
 
         submitForm()
 
