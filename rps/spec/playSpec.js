@@ -1,9 +1,16 @@
 'use strict';
 
+const {FakeRoundRepo} = require("./fakeRepo");
+
 const {Requests, THROW} = require('../src/rps');
 
 describe('play', () => {
-    let observer;
+    let observer, repo, requests;
+
+    beforeEach(() => {
+        repo = new FakeRoundRepo();
+        requests = new Requests(repo);
+    });
 
     describe('p1Wins', () => {
 
@@ -12,19 +19,19 @@ describe('play', () => {
         });
 
         it('rock vs scissors', () => {
-            new Requests().playRound(THROW.ROCK, THROW.SCISSORS, observer, repo);
+            requests.playRound(THROW.ROCK, THROW.SCISSORS, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
 
         it('paper vs rock', () => {
-            new Requests().playRound(THROW.PAPER, THROW.ROCK, observer, repo);
+            requests.playRound(THROW.PAPER, THROW.ROCK, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
 
         it('scissors vs paper', () => {
-            new Requests().playRound(THROW.SCISSORS, THROW.PAPER, observer, repo);
+            requests.playRound(THROW.SCISSORS, THROW.PAPER, observer);
 
             expect(observer.p1Wins).toHaveBeenCalled();
         });
@@ -36,19 +43,19 @@ describe('play', () => {
         });
 
         it('scissors vs rock', () => {
-            new Requests().playRound(THROW.SCISSORS, THROW.ROCK, observer, repo);
+            requests.playRound(THROW.SCISSORS, THROW.ROCK, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
 
         it('rock vs paper', () => {
-            new Requests().playRound(THROW.ROCK, THROW.PAPER, observer, repo);
+            requests.playRound(THROW.ROCK, THROW.PAPER, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
 
         it('paper vs scissors', () => {
-            new Requests().playRound(THROW.PAPER, THROW.SCISSORS, observer, repo);
+            requests.playRound(THROW.PAPER, THROW.SCISSORS, observer);
 
             expect(observer.p2Wins).toHaveBeenCalled();
         });
@@ -61,19 +68,19 @@ describe('play', () => {
         });
 
         it('rock vs rock', () => {
-            new Requests().playRound(THROW.ROCK, THROW.ROCK, observer, repo);
+            requests.playRound(THROW.ROCK, THROW.ROCK, observer);
 
             expect(observer.draw).toHaveBeenCalled();
         });
 
         it('paper vs paper', () => {
-            new Requests().playRound(THROW.PAPER, THROW.PAPER, observer, repo);
+            requests.playRound(THROW.PAPER, THROW.PAPER, observer);
 
             expect(observer.draw).toHaveBeenCalled();
         });
 
         it('scissors vs scissors', () => {
-            new Requests().playRound(THROW.SCISSORS, THROW.SCISSORS, observer, repo);
+            requests.playRound(THROW.SCISSORS, THROW.SCISSORS, observer);
 
             expect(observer.draw).toHaveBeenCalled();
         });
@@ -85,19 +92,19 @@ describe('play', () => {
         });
 
         it('rock vs sailboat', () => {
-            new Requests().playRound(THROW.SCISSORS, 'sailboat', observer, repo);
+            requests.playRound(THROW.SCISSORS, 'sailboat', observer);
 
             expect(observer.invalid).toHaveBeenCalled();
         });
 
         it('sailboat vs rock', () => {
-            new Requests().playRound('sailboat', THROW.SCISSORS, observer, repo);
+            requests.playRound('sailboat', THROW.SCISSORS, observer);
 
             expect(observer.invalid).toHaveBeenCalled();
         });
 
         it('sailboat vs sailboat', () => {
-            new Requests().playRound('sailboat', 'sailboat', observer, repo);
+            requests.playRound('sailboat', 'sailboat', observer);
 
             expect(observer.invalid).toHaveBeenCalled();
         });

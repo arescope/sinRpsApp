@@ -1,8 +1,8 @@
 const {Round} = require('../src/rps');
-const {FakeRoundRepo} = require('../src/fakeRepo');
+const {FakeRoundRepo} = require('./fakeRepo');
 
 
-fdescribe('FakeRoundRepo', () => {
+describe('FakeRoundRepo', () => {
     let repo;
 
     beforeEach(() => {

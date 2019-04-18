@@ -12,14 +12,21 @@ function Round(p1Throw, p2Throw, result) {
     this.result = result;
 }
 
-function Requests() {
+function Requests(repo) {
     this.playRound = (player1, player2, observer) => {
-        new PlayRoundRequest(player1, player2, observer).process();
+        new PlayRoundRequest(player1, player2, observer, repo).process();
+    }
+    this.getHistory = (observer) => {
+        if (repo.isEmpty()) {
+            observer.noRounds();
+        } else {
+            observer.rounds(repo.getAll());
+        }
     }
 }
 
 
-function PlayRoundRequest(p1, p2, observer) {
+function PlayRoundRequest(p1, p2, observer, repo) {
     function draw() {
         return p1 === p2;
     }
@@ -36,16 +43,19 @@ function PlayRoundRequest(p1, p2, observer) {
 
     this.process = () => {
         if (invalid(p1) || invalid(p2)) {
+            repo.save(new Round(p1, p2, 'invalid'))
             observer.invalid();
         } else if (draw()) {
+            repo.save(new Round(p1, p2, 'draw'))
             observer.draw();
         } else if (p1Wins()) {
+            repo.save(new Round(p1, p2, 'p1Wins'))
             observer.p1Wins();
         } else {
+            repo.save(new Round(p1, p2, 'p2Wins'))
             observer.p2Wins();
         }
     }
 }
 
-module.exports = {Requests, THROW}
 module.exports = {Requests, THROW, Round}
