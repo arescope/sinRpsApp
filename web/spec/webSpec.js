@@ -1,5 +1,6 @@
 import React from 'react';
 import * as ReactDOM from "react-dom";
+import ReactTestUtils from "react-dom/test-utils";
 import {RPSApp} from "../src/RPSApp";
 
 describe("play form", () => {
@@ -84,7 +85,7 @@ describe("play form", () => {
     it("sends the user input to the game module", function () {
         let playSpy = jasmine.createSpy()
 
-        renderForm({play: playSpy})
+        renderApp({play: playSpy})
 
         let input = document.querySelector("[name='p1Throw']")
         input.value = "foo"
