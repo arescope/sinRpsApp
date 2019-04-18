@@ -29,6 +29,7 @@ export class RPSApp extends React.Component {
     render() {
         return <div>
             {this.state.result}
+            <input name="p1Throw"/>
             <button onClick={this.submitHandler.bind(this)}>PLAY</button>
         </div>
 

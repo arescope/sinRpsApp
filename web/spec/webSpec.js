@@ -81,6 +81,24 @@ describe("play form", () => {
         });
     });
 
+    it("sends the user input to the game module", function () {
+        let playSpy = jasmine.createSpy()
+
+        renderForm({play: playSpy})
+
+        let input = document.querySelector("[name='p1Throw']")
+        input.value = "foo"
+        ReactTestUtils.Simulate.change(input)
+        //fill in p1 throw
+        //fill in p2 throw
+        //submit the form
+
+        submitForm()
+
+        //verify the game logic received those inputs
+        expect(playSpy).toHaveBeenCalledWith("foo", "bar", jasmine.any(Object))
+    })
+
     function renderApp(useCases) {
         ReactDOM.render(
             <RPSApp requests={useCases}/>,
