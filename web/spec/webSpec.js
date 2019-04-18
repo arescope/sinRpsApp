@@ -20,7 +20,7 @@ describe("play form", () => {
     describe('the game logic reported that the input is invalid', () => {
         beforeEach(() => {
             renderApp({
-                play: (p1, p2, observer) => observer.invalid()
+                playRound: (p1, p2, observer) => observer.invalid()
             });
         });
         it('tells the user that their input is invalid', () => {
@@ -36,7 +36,7 @@ describe("play form", () => {
     describe("the game logic reported that P1 won", function () {
         beforeEach(function () {
             renderApp({
-                play: function (p1, p2, observer) {
+                playRound: function (p1, p2, observer) {
                     observer.p1Wins()
                 }
             });
@@ -52,7 +52,7 @@ describe("play form", () => {
     describe("the game logic reported that P2 won", function () {
         beforeEach(function () {
             renderApp({
-                play: function (p1, p2, observer) {
+                playRound: function (p1, p2, observer) {
                     observer.p2Wins()
                 }
             });
@@ -69,7 +69,7 @@ describe("play form", () => {
     describe("the game logic reported that it was a draw", function () {
         beforeEach(function () {
             renderApp({
-                play: function (p1, p2, observer) {
+                playRound: function (p1, p2, observer) {
                     observer.draw()
                 }
             });
@@ -85,7 +85,7 @@ describe("play form", () => {
     it("sends the user input to the game module", function () {
         let playSpy = jasmine.createSpy()
 
-        renderApp({play: playSpy})
+        renderApp({playRound: playSpy})
 
         fillIn("p1Throw", "foo")
         fillIn("p2Throw", "bar")

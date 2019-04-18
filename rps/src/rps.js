@@ -7,7 +7,7 @@ const THROW = {
 const VALID_THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS];
 
 function Requests() {
-    this.play = (player1, player2, observer) => {
+    this.playRound = (player1, player2, observer) => {
         new PlayRoundRequest(player1, player2, observer).process();
     }
 }

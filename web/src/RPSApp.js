@@ -7,7 +7,7 @@ export class RPSApp extends React.Component {
     }
 
     submitHandler() {
-        this.props.requests.play(this.state.p1Throw, this.state.p2Throw, this)
+        this.props.requests.playRound(this.state.p1Throw, this.state.p2Throw, this)
     }
 
     invalid() {
